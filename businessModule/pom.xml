@@ -1,0 +1,32 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.ladderStrone</groupId>
+    <artifactId>LadderStone</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>businessModule</artifactId>
+  <packaging>jar</packaging>
+  
+  <dependencies>
+  
+  	<!-- SpringBoot  -->
+	  <dependency>
+	    	<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+	  </dependency> 
+	 <!-- End --> 
+  	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-context</artifactId>
+	    <version>4.3.8.RELEASE</version>
+	</dependency>
+  <!-- Dependent Module -->
+  	<dependency>
+  		<groupId>com.ladderStrone</groupId>
+  		<artifactId>dataModule</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
+  
+</project>
