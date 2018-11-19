@@ -14,5 +14,9 @@ public interface UserService extends UserDetailsService{
     
     public User findBySSO(String sso);
 	
-	public void addUser(User user);
+	public User addUser(User user);
+	
+	public User updateUserDetails(User user);
+	
+	public void deleteUser(User user);
 }

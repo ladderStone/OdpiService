@@ -1,10 +1,12 @@
 package com.ls.businessMod.service;
  
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,11 +41,12 @@ public class UserServiceImpl implements UserService{
 		return users;
 	}
 	
-	public void addUser(User user){
+	public User addUser(User user){
 		//user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		UserProfile userProfile = userProfileRepository.findByType("ADMIN");
-		user.setUserProfiles(new HashSet<UserProfile>(Arrays.asList(userProfile)));
-		userRepository.save(user);
+		Set<UserProfile> userProfileSet = user.getUserProfiles();
+		user.setCreateDate(Instant.now());
+		user.setUpdateDate(Instant.now());
+		return userRepository.save(user);
 	}
 
 	@Override
@@ -61,7 +64,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		
-		Optional<User> optionalUsers = userRepository.findByFirstNameAndPassword(userName, null);
+		Optional<User> optionalUsers = userRepository.findByUserNameAndPassword(userName, null);
 		optionalUsers
 					.orElseThrow(()-> new UsernameNotFoundException("UserName not found"));
 		
@@ -71,12 +74,27 @@ public class UserServiceImpl implements UserService{
 	
 	public UserDetails loadUserByUsername(String userName, String password) throws UsernameNotFoundException {
 		
-		Optional<User> optionalUsers = userRepository.findByFirstNameAndPassword(userName, password);
+		Optional<User> optionalUsers = userRepository.findByUserNameAndPassword(userName, password);
 		optionalUsers
 					.orElseThrow(()-> new UsernameNotFoundException("UserName not found"));
 		
 		return optionalUsers
 					.map(CustomUserDetails::new).get();
+	}
+
+	@Override
+	public User updateUserDetails(User user) {
+		Instant createDate = userRepository.findById(user.getId()).map(User::new).get().getCreateDate();
+		userRepository.delete(user);
+		user.setId(null);
+		user.setCreateDate(createDate);
+		user.setUpdateDate(Instant.now());
+		return userRepository.save(user);
+	}
+
+	@Override
+	public void deleteUser(User user) {
+		userRepository.delete(user);
 	}
 }
 

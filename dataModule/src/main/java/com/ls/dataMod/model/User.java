@@ -1,6 +1,8 @@
 package com.ls.dataMod.model;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
  
@@ -14,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.validator.constraints.NotEmpty;
  
@@ -21,44 +25,60 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name="APP_USER")
 public class User implements Serializable{
- 
+//  @NotEmpty
+//  @Column(name="SSO_ID", unique=true, nullable=false)
+//  private String ssoId;
+	
+	/*@NotEmpty
+  @Column(name="FIRST_NAME", nullable=false)
+  private String firstName;
+
+  @NotEmpty
+  @Column(name="LAST_NAME", nullable=false)
+  private String lastName;*/
 	 public User() {
 		 
 	 }
 	
-	
     public User(User user) {
 		this.email = user.email;
-		this.firstName = user.firstName;
+		this.userName = user.userName;
 		this.id = user.id;
-		this.lastName = user.lastName;
 		this.password = user.password;
-		this.ssoId = user.ssoId;
 		this.userProfiles = user.userProfiles;
+		this.contactNumber = user.contactNumber;
+		this.createDate = user.createDate;
+		this.updateDate = user.updateDate;
 	}
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
  
-    @NotEmpty
-    @Column(name="SSO_ID", unique=true, nullable=false)
-    private String ssoId;
-     
-    @NotEmpty
-    @Column(name="PASSWORD", nullable=false)
+	@NotEmpty
+    @Column(name="User_Name", unique = true,nullable=false)
+    private String userName;
+	
+	@NotEmpty
+    @Column(name="Password", nullable=false)
     private String password;
          
-    @NotEmpty
-    @Column(name="FIRST_NAME", nullable=false)
-    private String firstName;
- 
-    @NotEmpty
-    @Column(name="LAST_NAME", nullable=false)
-    private String lastName;
- 
-    @NotEmpty
-    @Column(name="EMAIL", nullable=false)
+	@NotEmpty
+    @Column(name="Email", unique = true,nullable=false)
     private String email;
+    
+    @NotEmpty
+    @Column(name="Contact_Number", unique = true,nullable=false)
+    private String contactNumber;
+    
+    //@NotEmpty
+   // @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="Create_User", nullable=false)
+    private Instant createDate; 
+    
+    //@NotEmpty
+    //@Temporal(TemporalType.TIMESTAMP)
+    @Column(name="Update_User", nullable=false)
+    private Instant updateDate;
  
     @NotEmpty
     @ManyToMany(fetch = FetchType.EAGER)
@@ -75,14 +95,6 @@ public class User implements Serializable{
         this.id = id;
     }
  
-    public String getSsoId() {
-        return ssoId;
-    }
- 
-    public void setSsoId(String ssoId) {
-        this.ssoId = ssoId;
-    }
- 
     public String getPassword() {
         return password;
     }
@@ -90,23 +102,7 @@ public class User implements Serializable{
     public void setPassword(String password) {
         this.password = password;
     }
- 
-    public String getFirstName() {
-        return firstName;
-    }
- 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
- 
-    public String getLastName() {
-        return lastName;
-    }
- 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
- 
+
     public String getEmail() {
         return email;
     }
@@ -123,12 +119,44 @@ public class User implements Serializable{
         this.userProfiles = userProfiles;
     }
  
-    @Override
+    public String getContactNumber() {
+		return contactNumber;
+	}
+
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+	
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public Instant getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Instant createDate) {
+		this.createDate = createDate;
+	}
+
+	public Instant getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Instant updateDate) {
+		this.updateDate = updateDate;
+	}
+
+	@Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((ssoId == null) ? 0 : ssoId.hashCode());
+        result = prime * result + ((userName == null) ? 0 : userName.hashCode());
         return result;
     }
  
@@ -146,10 +174,10 @@ public class User implements Serializable{
                 return false;
         } else if (!id.equals(other.id))
             return false;
-        if (ssoId == null) {
-            if (other.ssoId != null)
+        if (userName == null) {
+            if (other.userName != null)
                 return false;
-        } else if (!ssoId.equals(other.ssoId))
+        } else if (!userName.equals(other.userName))
             return false;
         return true;
     }
@@ -160,9 +188,9 @@ public class User implements Serializable{
      */
     @Override
     public String toString() {
-        return "User [id=" + id + ", ssoId=" + ssoId + ", password=" + password
-                + ", firstName=" + firstName + ", lastName=" + lastName
-                + ", email=" + email + "]";
+        return "User [id=" + id + ", ssoId=" + userName + ", password=" + password
+                + ", firstName=" + userName + ", lastName=" + userName
+                + ", email=" + email + ", contactNum=" + contactNumber+ "]";
     }
  
  

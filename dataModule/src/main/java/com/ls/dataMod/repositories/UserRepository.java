@@ -11,5 +11,5 @@ import com.ls.dataMod.model.User;
 public interface UserRepository extends JpaRepository<User,Integer>{
 	
 	//Optional is used what if user doesn't exist
-	Optional<User> findByFirstNameAndPassword(String userName, String password);
+	Optional<User> findByUserNameAndPassword(String userName, String password);
 }
