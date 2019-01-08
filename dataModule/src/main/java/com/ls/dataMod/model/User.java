@@ -2,10 +2,10 @@ package com.ls.dataMod.model;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
- 
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,8 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
  
@@ -25,34 +24,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name="APP_USER")
 public class User implements Serializable{
-//  @NotEmpty
-//  @Column(name="SSO_ID", unique=true, nullable=false)
-//  private String ssoId;
-	
-	/*@NotEmpty
-  @Column(name="FIRST_NAME", nullable=false)
-  private String firstName;
 
-  @NotEmpty
-  @Column(name="LAST_NAME", nullable=false)
-  private String lastName;*/
-	 public User() {
-		 
-	 }
-	
-    public User(User user) {
-		this.email = user.email;
-		this.userName = user.userName;
-		this.id = user.id;
-		this.password = user.password;
-		this.userProfiles = user.userProfiles;
-		this.contactNumber = user.contactNumber;
-		this.createDate = user.createDate;
-		this.updateDate = user.updateDate;
-	}
-
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer id;
+	@Id
+    private UUID id;
  
 	@NotEmpty
     @Column(name="User_Name", unique = true,nullable=false)
@@ -70,15 +44,18 @@ public class User implements Serializable{
     @Column(name="Contact_Number", unique = true,nullable=false)
     private String contactNumber;
     
-    //@NotEmpty
-   // @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="Create_User", nullable=false)
+    @NotNull
+    @Column(name="Create_User")
     private Instant createDate; 
     
-    //@NotEmpty
-    //@Temporal(TemporalType.TIMESTAMP)
-    @Column(name="Update_User", nullable=false)
+    @NotNull
+    @Column(name="Update_User")
     private Instant updateDate;
+    
+    
+    
+    @Column(name="User_Experience", nullable=false)
+    private Integer experience;
  
     @NotEmpty
     @ManyToMany(fetch = FetchType.EAGER)
@@ -86,12 +63,28 @@ public class User implements Serializable{
              joinColumns = { @JoinColumn(name = "USER_ID") }, 
              inverseJoinColumns = { @JoinColumn(name = "USER_PROFILE_ID") })
     private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
+    
+    
+    public User() {
+	}
+	
+   public User(User user) {
+		this.email = user.email;
+		this.userName = user.userName;
+		this.id = user.id;
+		this.password = user.password;
+		this.userProfiles = user.userProfiles;
+		this.contactNumber = user.contactNumber;
+		this.createDate = user.createDate;
+		this.updateDate = user.updateDate;
+		this.experience = user.experience;
+	}
  
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
  
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
  
@@ -144,11 +137,21 @@ public class User implements Serializable{
 	}
 
 	public Instant getUpdateDate() {
-		return updateDate;
+		return updateDate ;
 	}
 
 	public void setUpdateDate(Instant updateDate) {
 		this.updateDate = updateDate;
+	}
+	
+	
+
+	public Integer getExperience() {
+		return experience;
+	}
+
+	public void setExperience(Integer experience) {
+		this.experience = experience;
 	}
 
 	@Override
@@ -188,9 +191,8 @@ public class User implements Serializable{
      */
     @Override
     public String toString() {
-        return "User [id=" + id + ", ssoId=" + userName + ", password=" + password
-                + ", firstName=" + userName + ", lastName=" + userName
-                + ", email=" + email + ", contactNum=" + contactNumber+ "]";
+        return "User [id=" + id + ", userName=" + userName + 
+        		", email=" + email + ", contactNum=" + contactNumber+ ", experience=" + experience + "]";
     }
  
  

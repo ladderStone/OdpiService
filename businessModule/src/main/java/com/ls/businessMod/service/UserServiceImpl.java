@@ -2,11 +2,10 @@ package com.ls.businessMod.service;
  
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +13,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.ls.dataMod.model.CustomUserDetails;
 import com.ls.dataMod.model.User;
@@ -44,6 +42,7 @@ public class UserServiceImpl implements UserService{
 	public User addUser(User user){
 		//user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		Set<UserProfile> userProfileSet = user.getUserProfiles();
+		user.setId(UUID.randomUUID());
 		user.setCreateDate(Instant.now());
 		user.setUpdateDate(Instant.now());
 		return userRepository.save(user);
@@ -84,17 +83,25 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User updateUserDetails(User user) {
-		Instant createDate = userRepository.findById(user.getId()).map(User::new).get().getCreateDate();
+		/*Instant createDate = userRepository.findAllById(user.getId()).map(User::new).get().getCreateDate();
 		userRepository.delete(user);
 		user.setId(null);
 		user.setCreateDate(createDate);
 		user.setUpdateDate(Instant.now());
-		return userRepository.save(user);
+		return userRepository.save(user);*/
+		return null;
 	}
 
 	@Override
 	public void deleteUser(User user) {
 		userRepository.delete(user);
+	}
+
+	@Override
+	public User loadUser(String email, String password){
+		
+		User userObj = userRepository.findByEmailAndPassword(email, password);
+		return userObj;
 	}
 }
 

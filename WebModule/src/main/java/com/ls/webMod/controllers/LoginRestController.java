@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ls.businessMod.service.UserService;
@@ -22,7 +23,7 @@ import com.ls.dataMod.model.CustomUserDetails;
 import com.ls.dataMod.model.User;
 
 @RestController
-//@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins="http://localhost:4200")
 public class LoginRestController {
 	
 	@Autowired
@@ -31,15 +32,16 @@ public class LoginRestController {
 	
 	
 	//@PreAuthorize("hasAnyRole('ADMIN','USER')") // Authorize this method to be called only when the user has he role admin
-	@PostMapping("/login")
+	@GetMapping("/loginUser")
 	//public CustomUserDetails securedHello(Principal principal, User user){
-	public CustomUserDetails securedHello(@RequestBody User user){
+	public User validUser(@RequestParam("email") String email, @RequestParam("password") String password){
 		/*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		return auth.getName();*/
 		
 		//CustomUserDetails CustomUserDetails = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();;
-		CustomUserDetails CustomUserDetails = (CustomUserDetails) userService.loadUserByUsername(user.getUserName());
-		return CustomUserDetails;
+		//CustomUserDetails CustomUserDetails = (CustomUserDetails) userService.loadUserByUsername(user.getUserName());
+		User user = userService.loadUser(email, password);
+		return user;
 	}
 	
 	@RequestMapping(value="/addUser", method=RequestMethod.POST)

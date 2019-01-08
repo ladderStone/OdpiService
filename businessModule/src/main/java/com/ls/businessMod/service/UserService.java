@@ -19,4 +19,6 @@ public interface UserService extends UserDetailsService{
 	public User updateUserDetails(User user);
 	
 	public void deleteUser(User user);
+
+	public User loadUser(String email, String password);
 }
