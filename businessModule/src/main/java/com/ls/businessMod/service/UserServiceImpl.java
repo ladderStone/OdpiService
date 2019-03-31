@@ -41,8 +41,12 @@ public class UserServiceImpl implements UserService{
 	
 	public User addUser(User user){
 		//user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		Set<UserProfile> userProfileSet = user.getUserProfiles();
-		user.setId(UUID.randomUUID());
+		//Set<UserProfile> userProfileSet = user.getUserProfiles();
+		
+		if(null == user.getId()){
+			user.setId(UUID.randomUUID());
+		}
+		System.out.println(user.getId());
 		user.setCreateDate(Instant.now());
 		user.setUpdateDate(Instant.now());
 		return userRepository.save(user);
@@ -61,9 +65,9 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+	public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
 		
-		Optional<User> optionalUsers = userRepository.findByUserNameAndPassword(userName, null);
+		Optional<User> optionalUsers = userRepository.findByEmailAndPassword(email,"000");
 		optionalUsers
 					.orElseThrow(()-> new UsernameNotFoundException("UserName not found"));
 		
@@ -97,21 +101,4 @@ public class UserServiceImpl implements UserService{
 		userRepository.delete(user);
 	}
 
-	@Override
-	public User loadUser(String email, String password){
-		
-		User userObj = userRepository.findByEmailAndPassword(email, password);
-		return userObj;
-	}
 }
-
-
-
-
-
-
-
-
-
-
-
