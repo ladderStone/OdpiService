@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +44,21 @@ public class LoginRestController {
 		User user = userService.loadUser(email, password);
 		return user;
 	}
-	
+
+	@GetMapping("/userByEmail")
+	public User getUserByEmail(@RequestParam("email") String email){
+		System.out.println("inside getUserByName:"+email);
+		User user = null;
+		try {
+			user = (User) userService.loadUserByEmail(email);
+			System.out.println("inside getUserByName2:"+user);
+		}catch(UsernameNotFoundException e) {
+			System.out.println("exception");
+			return user;
+		}
+		return user;
+	}
+
 	@RequestMapping(value="/addUser", method=RequestMethod.POST)
 	public User addUser(@RequestBody User user){
 		System.out.println(user.getUserName());
