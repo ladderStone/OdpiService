@@ -13,5 +13,5 @@ public interface UserRepository extends JpaRepository<User,Integer>{
 	//Optional is used what if user doesn't exist
 	Optional<User> findByUserNameAndPassword(String userName, String password);
 	
-	User findByEmailAndPassword(String email, String password);
+	Optional<User> findByEmailAndPassword(String email, String password);
 }
