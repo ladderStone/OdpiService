@@ -101,4 +101,19 @@ public class UserServiceImpl implements UserService{
 		userRepository.delete(user);
 	}
 
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User loadUser(String email, String password){
+
+		Optional<User> userObj = userRepository.findByEmailAndPassword(email, password);
+		userObj.orElseThrow(()-> new UsernameNotFoundException("UserName not found"));
+		return userObj
+				.map(User::new).get();
+	}
+
 }
