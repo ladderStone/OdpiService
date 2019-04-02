@@ -19,13 +19,14 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
- 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize; 
 
 @Entity
 @Table(name="APP_USER")
 public class User implements Serializable{
 
 	@Id
+	@JsonDeserialize(using = IdToUUIDDeserializer.class)
     private UUID id;
  
 	@NotEmpty
@@ -54,15 +55,15 @@ public class User implements Serializable{
     
     
     
-    @Column(name="User_Experience", nullable=false)
+    @Column(name="User_Experience")
     private Integer experience;
  
-    @NotEmpty
+    /*@NotEmpty
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "APP_USER_USER_PROFILE", 
              joinColumns = { @JoinColumn(name = "USER_ID") }, 
              inverseJoinColumns = { @JoinColumn(name = "USER_PROFILE_ID") })
-    private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
+    private Set<UserProfile> userProfiles = new HashSet<UserProfile>();*/
     
     
     public User() {
@@ -73,7 +74,7 @@ public class User implements Serializable{
 		this.userName = user.userName;
 		this.id = user.id;
 		this.password = user.password;
-		this.userProfiles = user.userProfiles;
+		//this.userProfiles = user.userProfiles;
 		this.contactNumber = user.contactNumber;
 		this.createDate = user.createDate;
 		this.updateDate = user.updateDate;
@@ -104,13 +105,13 @@ public class User implements Serializable{
         this.email = email;
     }
  
-    public Set<UserProfile> getUserProfiles() {
+    /*public Set<UserProfile> getUserProfiles() {
         return userProfiles;
     }
  
     public void setUserProfiles(Set<UserProfile> userProfiles) {
         this.userProfiles = userProfiles;
-    }
+    }*/
  
     public String getContactNumber() {
 		return contactNumber;
