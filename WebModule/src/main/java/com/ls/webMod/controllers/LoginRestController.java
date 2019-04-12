@@ -24,7 +24,7 @@ import com.ls.dataMod.model.CustomUserDetails;
 import com.ls.dataMod.model.User;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200")
+//@CrossOrigin(origins="http://localhost:4200")
 public class LoginRestController {
 	
 	@Autowired
