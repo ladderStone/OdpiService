@@ -23,7 +23,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.ls.dataMod.model.CustomUserDetails;
-import com.ls.dataMod.model.User;
+import com.ls.dataMod.model.user.User;
 import com.ls.dataMod.repositories.UserProfileReposotory;
 import com.ls.dataMod.repositories.UserRepository;
 
@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService{
 
 	public void createEmailMessage() throws AddressException,
 	MessagingException {
-		String[] toEmails = { "mohittt007@gmail.com" };
+		String[] toEmails = { "ladderstoneofficial@gmail.com" };
 		String emailSubject = "Java Email";
 		String emailBody = "This is an email sent by JavaMail api.";
 
@@ -109,8 +109,8 @@ public class UserServiceImpl implements UserService{
 	public void sendEmail() throws AddressException, MessagingException {
 
 		String emailHost = "smtp.gmail.com";
-		String fromUser = "mohittt007@gmail.com";//just the id alone without @gmail.com
-		String fromUserEmailPassword = "";
+		String fromUser = "ladderstoneofficial@gmail.com";//just the id alone without @gmail.com
+		String fromUserEmailPassword = "ladderStone123#";
 
 		Transport transport = mailSession.getTransport("smtp");
 

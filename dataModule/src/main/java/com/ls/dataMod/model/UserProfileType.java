@@ -2,7 +2,7 @@ package com.ls.dataMod.model;
  
 import java.io.Serializable;
  
-public enum UserProfileType implements Serializable{
+public enum UserProfileType{
     USER("USER"),
     DBA("DBA"),
     ADMIN("ADMIN");

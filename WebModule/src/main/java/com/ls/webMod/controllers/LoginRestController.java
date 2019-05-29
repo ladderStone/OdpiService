@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ls.businessMod.service.UserService;
 import com.ls.businessMod.service.UserServiceImpl;
 import com.ls.dataMod.model.CustomUserDetails;
-import com.ls.dataMod.model.User;
+import com.ls.dataMod.model.user.User;
 
 @RestController
 //@CrossOrigin(origins="http://localhost:4200")

@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.ls.dataMod.model.User;
+import com.ls.dataMod.model.user.User;
 
 public interface UserService extends UserDetailsService{
 	

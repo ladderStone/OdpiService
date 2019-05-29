@@ -11,7 +11,7 @@ import javax.persistence.Table;
  
 @Entity
 @Table(name="USER_PROFILE")
-public class UserProfile implements Serializable{
+public class UserProfile{
  
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id; 
